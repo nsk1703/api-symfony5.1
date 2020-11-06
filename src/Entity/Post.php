@@ -5,36 +5,43 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
 class Post
 {
+    // 'Groups' permet de creer un groupe de serialisation qui identifie les donnees a normaliser
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("post:read")
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("post:read")
      */
     private $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     * @Groups("post:read")
      */
     private $comments;
 
