@@ -22,8 +22,7 @@ class ApiPostController extends AbstractController
      */
     public function index(PostRepository $postRepository)
     {
-        $posts = $postRepository->findAll();
-
+//        $posts = $postRepository->findAll();
 //        Symfony simplifie ces deux etapes en utilisant le "serializer";
 //        1ere Etape:
         // 'Normalisation': Processus permettant de transformer des objets en un tableau associatifs simples
@@ -49,9 +48,8 @@ class ApiPostController extends AbstractController
 //        $response = new JsonResponse($json, 200, [], true);
 
 //        Celui-ci serialise et affiche, donc fait les deux dernieres a la fois
-        $response = $this->json($posts, 200, [], ['groups' => 'post:read']);
 
-        return $response;
+        return  $this->json($postRepository->findAll(), 200, [], ['groups' => 'post:read']);
     }
 
     /**
@@ -69,6 +67,7 @@ class ApiPostController extends AbstractController
             $jsonDecode = $request->getContent();
             $post = $serializer->deserialize($jsonDecode, Post::class, 'json');
 
+//            Verification des erreurs de validation sur le format JSON.
             $errors = $validator->validate($post);
 
             if(count($errors) > 0){
